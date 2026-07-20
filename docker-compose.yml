@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    image: django-demo:latest
+    container_name: django-web
+    ports:
+      - "8000:8000"
+    security_opt:
+      - apparmor:unconfined
