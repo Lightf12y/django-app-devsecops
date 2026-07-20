@@ -1,0 +1,29 @@
+services:
+  app1:
+    build: .
+    image: docker-network-demo:latest
+    container_name: app1
+    ports:
+      - "8001:5000"
+    environment:
+      - INSTANCE_NAME=app1
+      - PEER_SERVICE=app2
+    networks:
+      - appnet
+
+  app2:
+    image: docker-network-demo:latest
+    container_name: app2
+    ports:
+      - "8002:5000"
+    environment:
+      - INSTANCE_NAME=app2
+      - PEER_SERVICE=app1
+    networks:
+      - appnet
+    depends_on:
+      - app1
+
+networks:
+  appnet:
+    driver: bridge
